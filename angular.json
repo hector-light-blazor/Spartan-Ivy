@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "SpartanPro3"
+    }
+  },
+  "defaultProject": "SpartanPro3",
+  "cli": {
+    "analytics": "173bc1fa-0e3e-45ff-a71f-e6aa5c5ec016"
+  }
 }
