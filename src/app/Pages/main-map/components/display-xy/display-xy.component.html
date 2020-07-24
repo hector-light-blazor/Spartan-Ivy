@@ -1,0 +1,7 @@
+<div #con  style="right: 100px; bottom: 18px;"
+     (dragend)="onDragEnd($event)" (mousedown)="onMouseDown($event)"
+     [ngClass]="{'bdLine': border}" id="xyCon">
+    <img (dragend)="onDragEnd($event)" onmousedown="return false" (click)="onBorder()" src="../../../../../assets/map_icon.png" width="40" height="40" />
+    <label [ngClass]="{'flash': flashLng}" (click)="copyValue(long, 0);">X: {{long}}</label>
+    <label [ngClass]="{'flash': flashLat}" (click)="copyValue(lat, 1);"> Y: {{lat}}</label>
+  </div>

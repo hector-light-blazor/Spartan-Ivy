@@ -1,0 +1,719 @@
+<div id="confirm" class="window warning" style="position: absolute;z-index:3;display:none;left: 50%;margin-left: -150px; width:300px; height:200px;">
+    <div class="window-caption">
+       <span class="window-caption-icon"><span class="mif-cabinet"></span></span>
+       <span class="window-caption-title">{{confirmationName}}</span>
+       <span (click)="closeConfirmation()" class="mif-cross place-right" style="cursor: pointer"></span>
+    </div>
+    <div class="window-content">
+        <h2>Are you sure?</h2>
+      <br>
+      <br>
+       <div class="margin10" style="margin-left: 60px;">
+         <button (click)="closeConfirmation()" class="button">Cancel</button>
+         <button (click)="confirmationDecision()"  class="button primary">Submit</button>
+       </div>
+    </div>
+</div> <!-- Confirmation Window -->
+
+<app-letter-viewer *ngIf="showSignature" (close)="showSignature = false" [id_ticket]="attributes.id_ticket" [pdfFile]="pdfFile"></app-letter-viewer>
+<!-- <app-signature-pad *ngIf="showSignature" (close)="showSignature = false" [pdfFile]="pdfFile"></app-signature-pad> -->
+<app-dialog *ngIf="displayDialog" [ESIGN]="esign" (esignPDF)="pdfFile = $event; showSignature = true; displayDialog = false;" (send)="generateLetter($event)" (close)="displayDialog = false;" [attributes]="attributes"></app-dialog>
+<app-ticket-workflow *ngIf="displayWorkflow" [ticketid]="attributes.id_ticket" (onClose)="updateRoute($event);displayWorkflow = false;" [sentto]="attributes.sentto" [routing]="attributes.system_assign" [staffId]="attributes.started_ticket"></app-ticket-workflow>
+<app-file-uploader (changeConfig)="fileUploaderActions($event)" *ngIf="showFileUploader" [objectid]='attributes.id_ticket'></app-file-uploader>
+<file-viewer (actions)="showFileViewer = false;" [ticketid]='attributes.id_ticket' *ngIf="showFileViewer"></file-viewer>
+<app-esri-map (closeClick)="closeClick($event)" (mapEvents)="collectMapEvents($event)" [ticketEnabled]="enableTicket" [point]='loc' [polygon]='parcel' [extent]="extent" [basemap]='base'  *ngIf="isMapEnabled"></app-esri-map>
+<app-google-map (onClose)="isGoogleEnabled=false;" *ngIf="isGoogleEnabled" [location]="loc"></app-google-map>
+<div *ngIf="showAttach" class="container page-content">
+  <form>
+      <!-- <file-uploader [objectid]="attributes.id_ticket" [activeColor]="'orangered'" [baseColor]="'green'"></file-uploader> -->
+  </form>
+</div>
+<div *ngIf="showViewAttach" >
+  <!-- <file-viewer [ticketid]="attributes.id_ticket" ></file-viewer> -->
+</div>
+<div *ngIf="showViewRoutes" >
+  <h1>Show View Routes</h1>
+</div>
+<div *ngIf="showRoutes" >
+  <!-- <app-routes [routing]="attributes.system_assign" [users]="routes"></app-routes> -->
+</div>
+
+<div [hidden]="showAttach || showViewAttach || showViewRoutes || showRoutes" class="tabcontrol" data-role="tabcontrol">
+        <div [hidden]="showAttach || showViewAttach || showViewRoutes || showRoutes" class="place-left" style="width: 80%;height:50px;">
+                <div style="float:left;cursor: pointer;">
+                    <img (click)="_openStaffProfile()" [src]="profileImage"  width="40" height="40" alt="">
+                </div>
+                <div style="float:left; width: 20px;height: 5px;">
+
+                </div>
+                <div style="float: left;">
+                     <h3  style="color:white">Ticket Number: {{attributes.objectid}}</h3>
+                    <input id="inTicketObj" type='hidden' [value]="attributes.objectid" />
+                    <input id="inTicketId" type='hidden' [value]="attributes.id_ticket" />
+                </div>
+               <h2 style="color: yellow; text-align: center">{{iswalking}}</h2>
+                <!--{{::ticket.attributes.objectid}}-->
+              </div>
+              <div (mouseenter)="showBack()" (mouseout)="showFront()" [hidden]="showAttach || showViewAttach || showViewRoutes || showRoutes" id="card"  class="place-left bg-red fg-white" style="cursor:pointer; width: 10%; height:50px;text-align:center;padding: 14px;">
+                  <span *ngIf="iconNumberOfDays"  class="mif-spinner5 mif-ani-spin"></span>
+                  <div *ngIf="front"  >
+                      {{numberOfDays}} Days
+                  </div>
+                  <div *ngIf="!front"  >
+                      {{init_date}}
+                  </div>
+              </div>
+              <div [hidden]="showAttach || showViewAttach || showViewRoutes || showRoutes" class="place-left bg-blue fg-white" style="cursor:pointer; width: 10%; height:50px;text-align:center;padding:14px;">
+                <span>{{due_date}}</span>
+              </div>
+              <br>
+              <br>
+<ul class="tabs">
+  <li><a href="#customerData">CUSTOMER DATA</a></li>
+  <li><a href="#premisesData">PREMISES DATA</a></li>
+  <li ><a href="#lv">LOCATION VALIDATION PROCESS</a></li>
+  <li ><a href="#db">DATABASE VALIDATION PROCESS</a></li>
+  <li ><a href="#gis">GIS VALIDATION PROCESS</a></li>
+  <li ><a href="#comment">Comments Feed - {{comments.length}}</a></li>
+  <li  ><a [ngClass]="{flashit: connectionsPulse}"  href="#history">CONNECTIONS - {{connectionsCount}}</a></li>
+  <li><a  href="#msg">MESSAGES - {{messagesCount}}</a></li>
+  <li><a href="#logs">LOG INFO - {{logsCount}}</a></li>
+</ul>
+<div class="frames ">
+        <div class="frame ribbed-white" id="customerData">
+            <div class="input-control text full-size" data-role="input">
+               <label  >First Name</label>
+               <input id="cfirst_name" data-tab="customerData"
+                [disabled]="customerSection" type="text"
+                data-checked="0"
+               [(ngModel)]="attributes.cfirst_name" logs uppercase>
+            </div>
+            <br>
+            <br>
+            <div class="input-control text full-size" data-role="input">
+                <label  >Last Name</label>
+                <input
+                id="clast_name" data-tab="customerData"
+                data-checked="0"
+                [disabled]="customerSection"
+                type="text"
+                [(ngModel)]="attributes.clast_name"
+                logs   uppercase>
+            </div>
+            <br>
+            <br>
+            <div class="input-control text full-size">
+                <label  >9-1-1 Telephone</label>
+                <input [disabled]="customerSection"
+                    id="telephone_land_line"
+                    data-tab="customerData"
+                    data-checked="0"
+                    type="text"
+                    [(ngModel)]="attributes.telephone_land_line"
+                    [textMask]="{mask: mask}" logs>
+            </div>
+            <br>
+            <br>
+            <div class="input-control text full-size">
+                <label  >ALT 1 Tele</label>
+                <input
+                    id="alt_telephone"
+                    [disabled]="customerSection"
+                    type="text"
+                    [(ngModel)]="attributes.alt_telephone"
+                    [textMask]="{mask: mask}"
+                    data-checked="0"
+                    data-tab="customerData"
+                    logs>
+            </div>
+            <br>
+            <br>
+            <div class="input-control text full-size">
+                <label  >ALT 2 Tele</label>
+                <input id="alt2_telephone"
+                 [disabled]="customerSection" type="text"
+                 [(ngModel)]="attributes.alt2_telephone"
+                 [textMask]="{mask: mask}"
+                 data-checked="0"
+                 data-tab="customerData"
+                 logs>
+            </div>
+            <br>
+            <br>
+            <div class="input-control text full-size">
+                <label  >Prefered Language</label>
+                <select id="prf_language"
+                 [disabled]="customerSection"
+                  [(ngModel)]="attributes.prf_language" data-checked="0"
+                   data-tab="customerData" logs>
+                    <option>English</option>
+                    <option>Spanish</option>
+                </select>
+                <!-- <input [disabled]="customerSection" type="text"   [(ngModel)]="attributes.prf_language" [textMask]="{mask: mask}"> -->
+            </div>
+            <br>
+            <br>
+            <div class="input-control text full-size">
+                    <label >Walk In</label>
+                <select id="walk_in" data-checked="0"
+                data-tab="customerData"
+                 [disabled]="customerSection"
+                 (change)="isWalking();"
+                  [(ngModel)]="attributes.walk_in" logs>
+                    <option>Yes</option>
+                    <option>No</option>
+                </select>
+                <!-- <input [disabled]="customerSection" type="text" [(ngModel)]="attributes.walk_in" [textMask]="{mask: mask}"> -->
+            </div>
+            <br>
+            <br>
+            <div class="input-control text full-size">
+                <label >Utilities</label>
+                <select id="utility" data-tab="customerData" data-checked="0"
+                    [disabled]="customerSection"
+                    (change)="isWalking();"
+                    [(ngModel)]="attributes.utility" logs>
+                    <option>Yes</option>
+                    <option>No</option>
+                </select>
+            </div>
+            <br>
+            <br>
+            <div class="input-control textarea full-size">
+                 <label  >Mailing Info</label>
+                <textarea  id="mailing_address" data-checked="0"
+                data-tab="customerData"
+                 [disabled]="customerSection"
+                [(ngModel)]="attributes.mailing_address" logs></textarea>
+            </div>
+         </div> <!-- End Of Customer Section -->
+
+        <div class="frame ribbed-white" id="premisesData">
+
+            <div class="input-control text full-size" data-role="input">
+            <label  >Owner First Name</label>
+              <input id="pfirst_name"
+              data-tab="premisesData"
+              data-checked="0"
+              [disabled]="premisesSection"
+              type="text"
+               [(ngModel)]="attributes.pfirst_name" uppercase logs>
+            </div>
+            <br>
+            <br>
+            <div class="input-control text full-size" data-role="input">
+                <label  >Owner Last Name</label>
+                <input id="plast_name" data-tab="premisesData" data-checked="0"
+                  [disabled]="premisesSection" type="text"
+                  [(ngModel)]="attributes.plast_name" uppercase logs>
+            </div>
+
+            <!-- <div class="input-control text full-size">
+                <label  >Owner Full Name</label>
+                <input  [disabled]="premisesSection" type="text" $event, 'pfull_name')" [(ngModel)]="attributes.pfull_name" >
+            </div> -->
+            <br>
+            <br>
+            <div class="input-control text full-size">
+                <label  >Subdivision</label>
+                <input id="subdivision" data-tab="premisesData"
+                 data-checked="0"  [disabled]="premisesSection" type="text"
+                 [(ngModel)]="attributes.subdivision"  uppercase logs>
+                <button class="button"><i aria-hidden="true" class="fa fa-search"></i></button>
+            </div>
+            <br>
+            <br>
+            <div class="input-control text full-size">
+                <label  >Block Number</label>
+                <input id="block_num" data-tab="premisesData" data-checked="0"
+                  [disabled]="premisesSection" type="text"
+                   [(ngModel)]="attributes.block_num"  logs>
+            </div>
+            <br>
+            <br>
+            <div class="input-control text full-size">
+                <label  >Lot Number</label>
+                <input id="lot_num" data-tab="premisesData" data-checked="0"
+                  [disabled]="premisesSection" type="text"
+                  [(ngModel)]="attributes.lot_num" logs>
+            </div>
+            <br>
+            <br>
+            <div class="input-control text full-size">
+                <label  >Tax Account</label>
+                <input id="tax_account_num" data-tab="premisesData" data-checked="0"   [disabled]="premisesSection"  type="text"
+                (focusout)="getConnections(); findParcelsInfo(attributes.tax_account_num, app.taxAccount, true)"
+                 [(ngModel)]="attributes.tax_account_num"  logs>
+
+            </div>
+            <br>
+            <br>
+            <div class="input-control text full-size">
+                <label  >Property ID</label>
+                <input id="property_id"
+                 data-tab="premisesData" data-checked="0"
+                 [disabled]="premisesSection" type="text"
+                (focusout)="getConnections(); findParcelsInfo(attributes.property_id, app.propertyId, true, true);"
+                 [(ngModel)]="attributes.property_id"  logs>
+
+            </div>
+            <br>
+            <br>
+            <div class="input-control text full-size">
+                <label  >Street</label>
+                <input id="street" data-tab="premisesData" data-checked="0"  [disabled]="premisesSection" type="text"
+                 [(ngModel)]="attributes.street"  logs>
+            </div>
+            <br>
+            <br>
+            <div class="input-control text full-size">
+                <label  >Intersection</label>
+                <input id="intersection" data-tab="premisesData"
+                data-checked="0" [disabled]="premisesSection" type="text"
+                 [(ngModel)]="attributes.intersection" logs>
+            </div>
+            <br>
+            <br>
+            <div class="input-control textarea full-size">
+                <label  >Building Description</label>
+                <textarea id="building_description" data-tab="premisesData"
+                data-checked="0" [disabled]="premisesSection"
+                 [(ngModel)]="attributes.building_description" logs>
+                </textarea>
+            </div>
+            <br>
+            <br>
+
+
+      </div> <!-- End Of Premises Section -->
+
+      <!-- START LV SECTION -->
+      <div class="frame ribbed-white" id="lv">
+         <div class="input-control text full-size" data-role="input">
+                <label >Address Number</label>
+                <input id="add_num" data-tab="lv" data-checked="0"
+                 [disabled]="lvSection" type="number"
+                  [(ngModel)]="attributes.add_num" logs>
+          </div>
+            <br>
+            <br>
+            <div class="input-control text full-size" data-role="input">
+                <label  >Pre Directional</label>
+                <input id="prd" data-tab="lv" data-checked="0"
+                  [disabled]="lvSection" type="text"
+                  [(ngModel)]="attributes.prd"  uppercase logs>
+            </div>
+            <br>
+            <br>
+            <div class="input-control text full-size">
+                <label  >Road Name</label>
+                <input id="rd" data-tab="lv" data-checked="0"
+                  [disabled]="lvSection" type="text"
+                  [(ngModel)]="attributes.rd" uppercase logs>
+            </div>
+            <br>
+            <br>
+            <div class="input-control text full-size">
+                <label  >Street Type</label>
+                <input id="sts" data-tab="lv" data-checked="0"
+                 [disabled]="lvSection" type="text"
+                 [(ngModel)]="attributes.sts"  uppercase logs>
+            </div>
+            <br>
+            <br>
+            <div class="input-control text full-size">
+                <label  >Post Directional</label>
+                <input id="pod" data-tab="lv" data-checked="0"
+                 [disabled]="lvSection" type="text"
+                 [(ngModel)]="attributes.pod"  uppercase logs>
+            </div>
+            <br>
+            <br>
+            <div class="input-control text full-size">
+                <label  >Unit</label>
+                <input id="unit" data-tab="lv" data-checked="0"
+                 [disabled]="lvSection" type="text"
+                 [(ngModel)]="attributes.unit" uppercase logs>
+            </div>
+            <br>
+            <br>
+            <div class="input-control text full-size">
+                <label  >MSAG Comm</label>
+                <input id="msag_comm" data-tab="lv" data-checked="0" [disabled]="lvSection" type="text"
+                 [(ngModel)]="attributes.msag_comm" uppercase logs>
+            </div>
+            <!-- <br>
+            <br>
+            <div class="input-control text full-size">
+                <label  >Postal Comm</label>
+                <input  [disabled]="lvSection" type="text"  [(ngModel)]="attributes.postal_comm" >
+            </div> -->
+            <br>
+            <br>
+            <div class="input-control text full-size">
+                <label  >Full Address</label>
+                <input id="full_address" data-tab="lv" data-checked="0"  [disabled]="lvSection" type="text"
+                  [(ngModel)]="attributes.full_address" uppercase logs>
+                <button class="button"><span class="mif-search"></span></button>
+            </div>
+            <br>
+            <br>
+            <div class="input-control text full-size">
+                <label  >Address By</label>
+                <input class="point"
+                 [value]="meFullName"
+                 type="text" (click)="stamp()"
+                 placeholder="CLICK HERE TO STAMP"  readonly />
+
+                <button (click)="stamp()" class="button">
+                    STAMP ME
+                </button>
+                <span style="float: right; color: red;" *ngIf="meStamp">GET WITH ADMIN CAN'T CHANGE STAMP</span>
+                <br >
+            </div>
+            <!-- BR -->
+            <br>
+            <br>
+            <!-- JKC Added Field -->
+            <div class="input-control text full-size">
+               <label>Date Addressed</label>
+                <input id="date_addres" data-tab="lv" data-checked="0"
+                 [disabled]="lvSection" type="date"
+                 [(ngModel)]="attributes.date_addressed"  logs>
+            </div>
+
+            <br>
+            <br>
+            <label class="switch-original " >
+              Address Issued
+                <input id="address_issued" data-tab="lv" data-checked="0"
+                 type="checkbox"
+                [(ngModel)]="attributes.address_issued"  logs>
+                <span class="check"></span>
+            </label>
+            <label class="switch-original " >
+              Called Customer
+                <input id="called_cust" data-tab="lv" data-checked="0"
+                 type="checkbox"
+                [(ngModel)]="attributes.called_cust"  logs>
+                <span class="check"></span>
+            </label>
+            <!-- <label class="switch-original " >
+                Address Letter and Plack Generated
+                <input [disabled]="lvSection" type="checkbox" [(ngModel)]="attributes.letter_plack_generated"  >
+                <span class="check"></span>
+            </label> -->
+            <br>
+            <br>
+            <div class="input-control text full-size">
+                Address Issued Date
+                <input id="address_issued_date"
+                data-tab="lv" data-checked="0"
+                type="date"
+                [(ngModel)]="attributes.address_issued_date"  logs>
+            </div>
+            <br>
+            <br>
+            <br>
+            <div class="input-control text full-size">
+                <label  >Address Issued By</label>
+                <input class="point"   [value]="meFullName2" type="text" (click)="stamp2()" placeholder="CLICK HERE TO STAMP" readonly   />
+
+                <button (click)="stamp2()" class="button">
+                    STAMP ME
+                </button>
+                <span style="float: right; color: red;" *ngIf="meStamp2">GET WITH ADMIN CAN'T CHANGE STAMP</span>
+                <br>
+                <!-- <select  class="point" [disabled]="lvSection" [(ngModel)]="attributes.address_issued_by" >
+                    <option *ngFor="let usr of susers" value="{{usr.user_id}}">{{usr.first_name + " " + usr.last_name}}</option>
+
+                </select> -->
+                <!-- <button (click)="attributes.address_issued_by = null" class="button"><i class="fa fa-undo" aria-hidden="true"></i>
+                </button> -->
+            </div>
+            <br>
+            <br>
+            <div class="input-control text full-size">
+              <label>Lat</label>
+              <input id='lat' data-tab="lv" data-checked="0"
+              type="text" (focusout)="changeXYFields()"
+               [(ngModel)]="attributes.lat" logs>
+              <button (click)="copyAndPaste('lat')" class="button">COPY</button>
+            </div>
+            <br>
+            <br>
+            <div class="input-control text full-size">
+              <label>Long</label>
+              <input id="longy" type="text"
+              data-tab="lv" data-checked="0"
+              (focusout)="changeXYFields()"
+              [(ngModel)]="attributes.longy" logs>
+              <button (click)="copyAndPaste('longy')" class="button">COPY</button>
+            </div>
+      </div> <!-- End Of LV Section -->
+      <div class="frame ribbed-white" id="db">
+          <div class="input-control text full-size" data-role="input">
+              <label  >Range From</label>
+              <input id="range_low" data-tab="db" data-checked="0"
+               [disabled]="dbSection" type="number"
+               [(ngModel)]="attributes.range_low" logs>
+          </div>
+          <br>
+          <br>
+          <div class="input-control text full-size" data-role="input">
+              <label  >Range To</label>
+              <input id="range_high"
+              data-tab="db" data-checked="0"
+              [disabled]="dbSection" type="number"
+               [(ngModel)]="attributes.range_high" logs>
+          </div>
+          <br>
+          <br>
+          <div class="input-control text full-size">
+              <label  >ESN</label>
+              <input id="esn" data-tab="db" data-checked="0"
+              [disabled]="dbSection"
+              type="number"  [(ngModel)]="attributes.esn" logs>
+          </div>
+          <br>
+          <br>
+          <div class="input-control select full-size">
+            <label  >MSAG  Valid</label>
+              <select id="msag_valid" data-tab="db"
+              data-checked="0"  [disabled]="dbSection"
+               [(ngModel)]="attributes.msag_valid" logs>
+                  <option></option>
+                  <option>YES</option>
+                  <option>NO</option>
+              </select>
+          </div>
+          <br>
+          <br>
+          <div class="input-control text full-size">
+              <label  >Trans ID</label>
+              <input id="trans_id" data-tab="db" data-checked="0"
+                [disabled]="dbSection" type="text"
+                [(ngModel)]="attributes.trans_id" logs>
+          </div>
+          <br>
+          <br>
+          <div class="input-control date full-size">
+              <label  >Verified Date</label>
+              <input id="date_verified" data-tab="db" data-checked="0"
+               [disabled]="dbSection" type="date"
+               [(ngModel)]="attributes.date_verified" logs>
+          </div>
+          <br>
+          <br>
+          <br>
+          <div class="input-control select full-size">
+              <label  >Verified By</label>
+              <select id="verified_by" data-tab="db" data-checked="0"
+               [disabled]="dbSection"
+               [(ngModel)]="attributes.verified_by" logs>
+                  <option *ngFor="let usr of users" value="{{usr.user_id}}">{{usr.first_name + " " + usr.last_name}}</option>
+              </select>
+              <button (click)="attributes.verified_by = null" class="button"><i class="fa fa-undo" aria-hidden="true"></i>
+              </button>
+          </div>
+      </div> <!-- End Of DB Section -->
+      <div class="frame ribbed-white" id="gis">
+          <label  >RCL Valid</label>
+          <br>
+          <br>
+          <br>
+          <div class="input-control select full-size">
+              <label  >Staff Initals</label>
+              <select id="initials_mapping"
+               data-tab="gis" data-checked="0"
+               [disabled]="gisSection"
+               [(ngModel)]="attributes.initials_mapping" logs>
+                  <option *ngFor="let usr of users" value="{{usr.user_id}}">{{usr.first_name + " " + usr.last_name}}</option>
+              </select>
+              <button (click)="attributes.initials_mapping = null" class="button"><i class="fa fa-undo" aria-hidden="true"></i>
+              </button>
+          </div>
+          <br>
+          <br>
+          <div class="input-control date full-size">
+              <input id="mapping_verified_date"
+               data-tab="gis" data-checked="0"
+               [disabled]="gisSection" type="date"
+               [(ngModel)]="attributes.mapping_verified_date" logs>
+          </div>
+          <br>
+          <br>
+
+          <label  >SSAP Valid</label>
+          <br>
+          <br>
+          <br>
+          <div class="input-control select full-size">
+              <label  >Staff Initials</label>
+              <select [disabled]="gisSection" [(ngModel)]="attributes.initials_geocoding" >
+                <option *ngFor="let usr of users" value="{{usr.user_id}}">{{usr.first_name + " " + usr.last_name}}</option>
+              </select>
+              <button (click)="attributes.initials_geocoding = null" class="button"><i class="fa fa-undo" aria-hidden="true"></i>
+              </button>
+          </div>
+          <br>
+          <br>
+          <div class="input-control date full-size">
+              <input [disabled]="gisSection" type="date" [(ngModel)]="attributes.geocoding_date" >
+          </div>
+      </div>  <!-- End Of GIS Section -->
+      <div class="frame ribbed-white" id="comment">
+          <ul class="chat">
+              <li *ngFor="let com of comments"  class='left clearfix'>
+                <span class="chat-img pull-left">
+                  <img src="../../../assets/circle_user.png" alt="User Avatar" class="img-circle" width="32" height="32" />
+                </span>
+                <div class="chat-body clearfix">
+                    <div class="header">
+                        <strong style="font-size:10px;" class="primary-font">{{com.first_name + ' ' + com.last_name}}</strong>
+                        <small class="pull-right text-muted">
+                            <i class="fa fa-clock-o" aria-hidden="true"></i>{{com.time}}
+                            <br />
+                            <button *ngIf="com.allow" (click)="delComment(com.id_com)" class="button danger rounded">Remove</button>
+                            <button *ngIf="com.allow" (click)="com.edit = !com.edit;" class="button primary rounded">Edit</button>
+                        </small>
+
+                        </div>
+                        <p>
+                          <textarea rows="4" cols="40" *ngIf="com.edit" (keyup.enter)="editComment(com)" [(ngModel)]="com.ticket_comments"  >
+                            </textarea>
+                          <label *ngIf="!com.edit">{{com.ticket_comments}}</label>
+                        </p>
+                </div>
+                <hr>
+              </li>
+        </ul>
+      </div> <!-- End Of Comments Feed Section -->
+
+      <div class="frame ribbed-white" id="history">
+            <ngx-datatable #table class="material"
+           [rows]="rows"
+
+           [columnMode]="'force'"
+           [headerHeight]="50"
+            [footerHeight]="50"
+            [rowHeight]="50"
+
+
+            [loadingIndicator]="isConnectionsLoading"
+
+            [scrollbarV]="true"
+
+            [columns]="columns"
+            (activate)="clickSelectedConnection($event)">
+
+             </ngx-datatable>
+      </div>
+      <div class="frame ribbed-white" id="msg">
+        <div class="input-control text">
+            <input type="text" placeholder="Search Parcels" [(ngModel)]="searchParcel"  (keyup.enter)="decideParcelInfo(searchParcel)" >
+            <button (click)="decideParcelInfo(searchParcel)" class="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+        </div>
+            <table class="table">
+                <caption><h3>HCAD</h3></caption>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Owner Name</th>
+                        <th>Subdivision</th>
+                        <th class="sortable-column">Tax ID</th>
+                        <th class="sortable-column">Property ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-template ngFor let-parcel [ngForOf]="parcels">
+                        <tr >
+                            <td>
+                              <button class="button rounded" (click)="openMessageTable(parcel)">
+                                  <i *ngIf="!parcel.moreinfo" class="fa fa-plus-circle" aria-hidden="true"></i>
+                                  <i *ngIf="parcel.moreinfo" class="fa fa-minus-circle" aria-hidden="true"></i>
+
+                            </button>
+                              <button class="button rounded" (click)="copyConfiramtion(parcel)"><i class="fa fa-clipboard" aria-hidden="true"></i></button>
+                              <button class="button rounded" (click)="displayMap(parcel)" ><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+                            </td>
+                            <td>
+                                    {{
+                                        (parcel.attributes.owner_name.length>24)? (parcel.attributes.owner_name | slice:0:24)+'..':(parcel.attributes.owner_name)
+                                    }}</td>
+                                    <td>{{ (parcel.attributes.hood_name.length>14)? (parcel.attributes.hood_name | slice:0:14)+'..':(parcel.attributes.hood_name)
+                                    }}</td>
+                                    <td>{{parcel.attributes.geo_id}}</td>
+                                    <td>{{parcel.attributes.PROP_ID}}</td>
+                        </tr>
+                        <tr *ngIf="parcel.moreinfo">
+                            <td>
+                                <table class="table"  style="padding-left:100px;" cellspacing="0" cellpadding="5" border="0">
+                                    <tbody>
+                                        <tr *ngFor="let item of parcel.display">
+                                            <td>{{item.name}}:</td><td>{{item.value}}</td></tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        </ng-template>
+
+                </tbody>
+            </table>
+
+            <table class="table">
+                <caption><h3>WCAD</h3></caption>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Owner Name</th>
+                        <th>Subdivision</th>
+                        <th class="sortable-column">Tax ID</th>
+                        <th class="sortable-column">Property ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-template ngFor let-parcel [ngForOf]="wparcels">
+                        <tr >
+                            <td>
+                              <button class="button rounded" (click)="openMessageTable(parcel)">
+                                  <i *ngIf="!parcel.moreinfo" class="fa fa-plus-circle" aria-hidden="true"></i>
+                                  <i *ngIf="parcel.moreinfo" class="fa fa-minus-circle" aria-hidden="true"></i>
+
+                            </button>
+                              <button class="button rounded" (click)="copyConfiramtion(parcel)"><i class="fa fa-clipboard" aria-hidden="true"></i></button>
+                              <button class="button rounded" (click)="displayMap(parcel)" ><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+                            </td>
+                            <td>
+                                    {{
+                                        (parcel.attributes.file_as_na.length>24)? (parcel.attributes.file_as_na | slice:0:24)+'..':(parcel.attributes.file_as_na)
+                                    }}</td>
+                                    <td>{{ (parcel.attributes.legal_desc.length>14)? (parcel.attributes.legal_desc | slice:0:14)+'..':(parcel.attributes.legal_desc)
+                                    }}</td>
+                                    <td>{{parcel.attributes.geo_id}}</td>
+                                    <td>{{parcel.attributes.PROP_ID}}</td>
+                        </tr>
+                        <tr *ngIf="parcel.moreinfo">
+                            <td>
+                                <table class="table"  style="padding-left:100px;" cellspacing="0" cellpadding="5" border="0">
+                                    <tbody>
+                                        <tr *ngFor="let item of parcel.display">
+                                            <td>{{item.name}}:</td><td>{{item.value}}</td></tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        </ng-template>
+
+                </tbody>
+            </table>
+      </div>
+
+      <div id="logs">
+        <ticket-logs #logsComp (logTotal)="totalLogs($event)" [ticketId]="attributes.id_ticket"></ticket-logs>
+
+      </div>
+</div>
+</div>
+<app-master-loading [regularLoading]="true" *ngIf="isLoading"></app-master-loading>
+

@@ -1,0 +1,82 @@
+<div class="window">
+  <div class="window-caption">
+      <span class="window-caption-icon"><span class="mif-windows"></span></span>
+      <span class="window-caption-title">NRF Form - {{name}}</span>
+      
+      <span class="btn-close" (click)="onClose()"></span>
+  </div>
+  <div class="window-content" style="height: 400px">
+      <div class="tabcontrol" data-role="tabcontrol">
+          <ul class="tabs">
+              <li><a href="#info" >Info</a></li>
+              <li><a href="#notes" >Notes</a></li>
+          </ul>
+          <div class="frames">
+              <div class="frame ribbed-white" id="info">
+                      <label >TN Full</label>
+                      <div class="input-control text full-size">
+                        <input [(ngModel)]="attributes.full_tn" disabled type="text">
+                      </div>
+                      <label >PSAP Name</label>
+                    <div class="input-control text full-size">
+                      
+                      <input [(ngModel)]="attributes.psap_name" disabled type="text">
+                    </div>
+                    <label >Host PSAP Name</label>
+                    <div class="input-control password full-size">
+                      
+                      <input [(ngModel)]="attributes.psap" disabled type="text">
+                    </div>
+                    <label >Date</label>
+                    <div class="input-control text full-size">
+                      <input [(ngModel)]="attributes.bid_date" type="text" disabled >
+                    </div>
+                    <label >Time</label>
+                    <div class="input-control text full-size">
+                      <input [(ngModel)]="attributes.bid_time" type="text" disabled >
+                    </div>
+                    <label >Call One</label>
+                    <div class="input-control text full-size">
+                      <input (click)="timeStampCall(1)" [(ngModel)]="attributes.call_one" type="text" >
+                    </div>
+                    <label >Call Two</label>
+                    <div class="input-control text full-size">
+                      <input (click)="timeStampCall(2)" [(ngModel)]="attributes.call_two" type="text" >
+                    </div>
+                    <label >Call Three</label>
+                    <div class="input-control text full-size">
+                      <input (click)="timeStampCall(3)" [(ngModel)]="attributes.call_three" type="text" >
+                    </div>
+                    <label >STATUS</label>
+                    <div class="input-control select">
+                      
+                        <select (change)="onChange()" [(ngModel)]="attributes.status">
+                            <option>OPEN</option>
+                            <option>CLOSED</option>
+                        </select>
+                    </div>
+                 
+              </div>
+              <div class="frame ribbed-white" id="notes">
+                 <div id="chat" >
+                    <div id="body" style="height: 240px;overflow: auto;">
+                      <ul>
+                        <li *ngFor="let item of comments"> {{item.notes}}</li>
+                      </ul>
+                    </div>
+                    <div id="bottom" style="height: 50px; bottom: 0px;">
+                      <div class="input-control text full-size" data-role="input">
+                          <input (keyup.enter)="sendComments()" [(ngModel)]="comment" type="text">
+                          <button (click)="sendComments()" class="button">
+                              <i class="fa fa-comments"></i>
+                          </button>
+                      </div>
+                  </div>
+                    
+                 </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+

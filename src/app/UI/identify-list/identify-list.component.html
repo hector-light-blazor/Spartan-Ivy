@@ -1,0 +1,47 @@
+<div id="arrow">
+    <button (click)="unMini()" class="button">Identify Results <i class="fa fa-angle-double-right"></i></button>
+</div>
+<div id="container" [ngStyle]="{'opacity': opacity}">
+
+    <div class="window">
+        <div class="window-caption" style="background: #303030; box-shadow: 0 2px 3px #ccc; border-bottom: 1px #303030 solid; border-top: 1px #0ce3ac solid;">
+            <div style="color:white;" class="window-caption-title">Identify Results
+                  
+                <div class="pull-right">
+                    <button (click)="onTransparency()" class="button cycle-button"><i class="fa fa-cog"></i></button>
+                    <button (click)="onMini()" class="button cycle-button">
+                            <i class="fa fa-window-minimize"></i>
+                    </button>
+                    <button (click)="onClose()" class="button cycle-button">X</button>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+            <br>
+            <br>
+  <div id="sub" *ngFor="let item of list; let i = index">
+
+    <div class="panel">
+        <div class="heading">
+            <span class="title">{{item.layerName}}</span>
+            <button (click)="viewFeature(item, i)" class="button cycle-button">
+                <i *ngIf="!item.display" class="fa fa-plus"></i>
+                <i *ngIf="item.display"  class="fa fa-minus"></i>
+            </button>
+        </div>
+        <div *ngIf="item.display" class="content">
+                <table class="table"  style="padding-left:100px;" cellspacing="0" cellpadding="5" border="0">
+                        <tbody>
+                            <tr *ngFor="let item of item.feature.attributes | keys">
+                                <td>{{item.key}}:</td><td>{{item.value}}</td></tr>
+                        </tbody>
+                </table>
+        </div>
+    </div>
+      
+      
+      <div id="line"></div>
+      <br>
+  </div>
+</div>

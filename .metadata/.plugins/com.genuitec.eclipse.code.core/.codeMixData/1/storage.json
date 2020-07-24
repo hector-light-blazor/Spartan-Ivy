@@ -1,0 +1,14 @@
+{
+    "telemetry.machineId": "0a1dc211c21c91444aa073f9640e5c3224cd7ae77c6cc271639db876b2f91b90",
+    "openedPathsList": {
+        "workspaces3": [
+            {
+                "id": "b6a6a3d63f4bdb0be2b0c19d2e564296",
+                "configURIPath": "file:///c%3A/projects_angular/Angular9_Ivy-render/SpartanPro3/.metadata/codemix.code-workspace"
+            }
+        ],
+        "files2": []
+    },
+    "theme": "vs-dark",
+    "themeBackground": "#221a0f"
+}

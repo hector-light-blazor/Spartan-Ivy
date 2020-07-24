@@ -1,0 +1,67 @@
+<div #window class="window" [ngStyle]="{'height': height}" style="position: absolute;top: 8px;left:4px; z-index:2000;width: 99%;">
+  <map-display-xy #xy [pauseMove]="pauseMove"></map-display-xy>
+  <div class="window-caption">
+    <span class="window-caption-icon"><i class="fa fa-gamepad" aria-hidden="true"></i></span>
+    <span class="window-caption-title">Map Viewer</span>
+    <span class="pull-right">
+
+        <button (click)="closeMap()" class="button btnSize">
+            <i class="fa fa-window-close" aria-hidden="true"></i>
+        </button>
+      </span>
+    <span class="pull-right">
+      <button (click)="maximizeMap()" class="button btnSize">
+          <i class="fa fa-window-restore" aria-hidden="true"></i>
+      </button>
+    </span>
+    <span class="pull-right">
+      <button class="button btnSize" (click)="onIdentify()"><img class="img18" style="margin-bottom: 4px;" src="../../../assets/searchengin-brands.svg" /></button>
+      <button (click)="onMeasure()"  class="button btnSize"><img class="img18" style="margin-bottom: 4px;" src="../../../assets/tape-solid.svg" /></button>
+      <button class="button btnSize" (click)="onLegendOnOff()">Legend</button>
+      <button (click)="toggleQuickPick()" [ngClass]="{'enable': quickPickOnOff}" class="button btnSize">QuickPick</button>
+        <button (click)="changeBaseMap()" *ngIf="image" class="button btnSize">Aerial</button>
+        <button (click)="changeBaseMap()" *ngIf="base" class="button btnSize">baseMap</button>
+      <button (click)="minimizedMap()" class="button btnSize">
+          <i class="fa fa-window-minimize" aria-hidden="true"></i>
+      </button></span>
+  </div>
+  <div  class="window-content" style="overflow: hidden;">
+
+    <app-master-loading [regularLoading]="true" *ngIf="isLoading"></app-master-loading>
+    <app-full-screen-pick *ngIf="enabledFullScreenPic" [src]="selectedPic" (onClose)="enabledFullScreenPic = false" ></app-full-screen-pick>
+    <app-quick-pick-tools *ngIf="quickPickEnabled" [pic]="selectedPic" (closeOutput)="quickPickEnabled = false; clearMapGraphics();"></app-quick-pick-tools>
+    <app-identify-list (display)="zoomAndFlash($event)" (close)="displayIdentify = false;graphicLayer.clear();" [list]="mapService.identifyResponse" *ngIf="displayIdentify"></app-identify-list>
+    <div *ngIf="legendOnOff" id="legend" style="position: absolute; left: 0;width: 330px; z-index: 4000; border: 1px solid; background: white;">
+        <ul>
+          <li>
+
+            <input (click)="onLegend(null, 'polygon')"  type="checkbox" data-index="0" name="city" #polygon>
+            <label >Inside City</label>
+          </li>
+          <li>
+
+            <input (click)="onLegend(null, 'polygon')"  type="checkbox" data-index="1" name="etj" #polygon>
+            <label >ETJ</label>
+          </li>
+          <li>
+
+            <input (click)="onLegend(null, 'polygon')"  type="checkbox" data-index="2" name="msag" #polygon>
+            <label >MSAG</label>
+          </li>
+          <li>
+
+            <input (click)="onLegend($event.target, 'roads')" [(ngModel)]="roadArrows" type="checkbox"
+                   name="" id="">
+            <label >Road Arrows</label>
+          </li>
+
+        </ul>
+    </div>
+    <div id="mtool" class="dijitTitlePaneTitle" style="position: absolute; display: none; bottom: 0;width: 330px; z-index: 4000;">
+      <div id="measurementDiv"></div>
+    </div>
+    <div #map id="map" >
+
+    </div>
+  </div>
+</div>

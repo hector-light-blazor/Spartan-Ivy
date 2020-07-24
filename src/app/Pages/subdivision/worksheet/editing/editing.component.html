@@ -1,0 +1,12 @@
+<div style="position: absolute; width: 200px; height: 300px; outline: 1px red;">
+    <div (mousewheel)="mouseScroll($event)" (mousemove)="hello($event)"  id="editingPreview">
+        <app-tools (cmd)="cmdInfo($event)"></app-tools>
+        <!-- <app-text-editor></app-text-editor> -->
+        <div class="close" >
+            <i (click)="onClose()" class="fa fa-times-circle" aria-hidden="true"></i>
+        </div>
+    
+     <canvas id="c"  #editing width="500" height="500"></canvas>
+    </div>
+</div>
+

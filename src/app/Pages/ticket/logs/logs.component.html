@@ -1,0 +1,33 @@
+<div  (logged)="reDownload()" id="contLog">
+  <table class="table">
+    <thead>
+    <tr>
+        <th><button (click)="reDownload()" class="button">Refresh Logs</button>#</th>
+        <th>Field Name</th>
+        <th>Field Value Name</th>
+        <th>TAB SECTION</th>
+        <th>Username</th>
+        <th>TimeStamp</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of logs; let i=index;">
+        <td><button 
+           id="{{i}}"
+          (click)="previewElement($event, item['input_attribute'], item['tab_location'])" class="button drop-shadow">PREVIEW</button>
+          <button (click)="replaceValue(item['input_attribute'], item['input_value'])" class="button drop-shadow alert">REPLACE</button>
+        </td>  
+        <td>{{item['input_attribute']}}</td>
+        <td>{{item['input_value']}}</td>
+        <td>{{item['tab_location']}}</td>
+        <td>{{item['full_name']}}</td>
+        <td>{{item['input_modified']}}
+            {{item['time_txt']}}
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+

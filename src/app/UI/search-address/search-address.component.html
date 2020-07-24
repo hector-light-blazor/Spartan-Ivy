@@ -1,0 +1,19 @@
+<div id="search">
+  <div class="input-control text full-size" data-role="input">
+     
+    <input auto-complete min-chars="3" id="auto" (valueChanged)="myCallback($event)" path-to-data="results" [(ngModel)]="myData" list-formatter="suggestion" style="height: 2.125rem;" [source]="googleGeoCode" type="text" >
+    <div class="button-group">
+      <button class="button" id="searchauto"><i aria-hidden="true" class="fa fa-search"></i></button>
+      <button class="button" (click)="lat = !lat; lng = !lng;"><i class="fa fa-map-marker"></i></button>
+   </div>
+  </div>
+
+    <div *ngIf="lat" class="input-control text" data-role="input">
+      <input type="text" (keyup.enter)="enterSearch();" [(ngModel)]="latinput" placeholder="Lat"> 
+   </div>
+
+  <!-- Input with reveal helper -->
+  <div *ngIf="lng" class="input-control text" data-role="input">
+      <input type="text" (keyup.enter)="enterSearch();"  [(ngModel)]="lnginput" placeholder="Long">
+  </div>
+</div>

@@ -1,0 +1,40 @@
+.btnSize {
+    height: 20px;
+}
+
+.enable {
+    background: rgb(119, 6, 6);
+    color:white;
+}
+
+.window-content {
+    height: 95%;
+}
+.window-rotate {
+    -ms-transform: rotate(90deg); /* IE 9 */
+    -webkit-transform: rotate(90deg); /* Safari */
+    transform: rotate(90deg);
+}
+
+#map {
+    margin: 0; 
+    padding: 0; 
+    height: 100%;
+    width: 100%
+}
+.img18 {
+    height: 18px;
+    
+}
+
+
+.dijitButtonContents {
+    padding: 5px 10px;
+
+  }
+
+  ul{
+      list-style: none;
+  }
+
+  
