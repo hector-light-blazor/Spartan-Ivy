@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { ArchiveTicketListComponent } from './archive-ticket-list/archive-ticket-list.component';
-import { MainMapComponent } from './main-map/main-map.component';
+import { LoginComponent } from './Pages/login/login.component';
 
 
 const routes: Routes = [
@@ -12,54 +10,58 @@ const routes: Routes = [
   },
   {
     path: 'ticket/charts',
-    loadChildren: () => import('./ticket-charts/ticket-charts.module').then(m => m.TicketChartsModule)///#TicketChartsModule'
+    loadChildren: () => import('./Pages/ticket-charts/ticket-charts.module').then(m => m.TicketChartsModule)
+    ///  #TicketChartsModule'
   },
   {
     path: 'ticket/dashboard',
-    loadChildren: () => import('./dashboard-tickets/dashboard-tickets.module').then(m => m.DashboardTicketsModule)
+    loadChildren: () => import('./Pages/dashboard-tickets/dashboard-tickets.module').then(m => m.DashboardTicketsModule)
   },
   {
     path: 'ticket/filter',
-    loadChildren: () => import('./ticket-data-table/ticket-data-table.module').then(m => m.TicketDataTableModule) //#TicketDataTableModule'
+    loadChildren: () => import('./Pages/ticket-data-table/ticket-data-table.module').then(m => m.TicketDataTableModule)
+    // #TicketDataTableModule'
   },
   {
     path: 'ticket/new',
-    loadChildren: () => import('./ticket/ticket.module').then(m => m.TicketModule) //#TicketModule'
-  
+    loadChildren: () => import('./Pages/ticket/ticket.module').then(m => m.TicketModule)
+    // #TicketModule'
   },
   {
     path: 'ticket/view/archives',
-    component: ArchiveTicketListComponent
+    loadChildren: () => import('./Pages/archive-ticket-list/archive-ticket-list.module').then(m => m.ArchiveTicketListModule)
   },
   {
     path: 'ticket/view/:id',
-    loadChildren: () => import('./ticket/ticket.module').then(m => m.TicketModule)//#TicketModule'
+    loadChildren: () => import('./Pages/ticket/ticket.module').then(m => m.TicketModule)
+    // #TicketModule'
   },
   {
     path: 'ticket/calendar-view',
-    loadChildren: () => import('./tck-calendar-view/tck-calendar-view.module').then(m => m.TckCalendarViewModule)//#TckCalendarViewModule'
+    // tslint:disable-next-line:max-line-length
+    loadChildren: () => import('./Pages/tck-calendar-view/tck-calendar-view.module').then(m => m.TckCalendarViewModule)// #TckCalendarViewModule'
   },
-  
+
   {
-    path: 'ticket/quickSearch/:search', 
-    loadChildren: () => import('./quick-search/quick-search.module').then(m => m.QuickSearchModule) //#QuickSearchModule'
+    path: 'ticket/quickSearch/:search',
+    loadChildren: () => import('./Pages/quick-search/quick-search.module').then(m => m.QuickSearchModule) // #QuickSearchModule'
   },
 
   {
     path: 'nrf',
-    loadChildren: () => import('./nrf/nrf.module').then(m => m.NrfModule)//#NrfModule'
+    loadChildren: () => import('./Pages/nrf/nrf.module').then(m => m.NrfModule)// #NrfModule'
   },
   {
     path: 'subdivision',
-    loadChildren: () => import('./subdivision/subdivision.module').then(m => m.SubdivisionModule) //#SubdivisionModule'
+    loadChildren: () => import('./Pages/subdivision/subdivision.module').then(m => m.SubdivisionModule) // #SubdivisionModule'
   },
   {
     path: 'Map',
-    loadChildren:() => import('./main-map/main-map.module') .then(m => m.MainMapModule) //MainMapComponent
+    loadChildren: () => import('./Pages/main-map/main-map.module') .then(m => m.MainMapModule) // MainMapComponent
   },
   {
     path: 'Settings',
-    loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) //#SettingsModule'
+    loadChildren: () => import('./Pages/settings/settings.module').then(m => m.SettingsModule) // #SettingsModule'
   }
 
 ];
