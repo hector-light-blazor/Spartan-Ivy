@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AppService, USER} from '../../app.service';
+import {AppService, FEED, USER} from '../../app.service';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import {takeWhile} from 'rxjs/operators';
 import { LogsComponent } from './logs/logs.component';
@@ -20,6 +20,7 @@ export class TicketComponent implements OnInit {
   @ViewChild('table') table: any;
   // @ViewChild('table') table: DatatableComponent;
    @ViewChild(LogsComponent) logs: LogsComponent;
+  allowToSTMP: boolean;  // Controls the address by using profile user info, if they can stamp.
   attributes: Ticket; // ..This Holds the binding for ticket form attributes..
   showSignature = false; // Holds the signature pad to esign...
   pdfFile: any = {}; // Holds the file name and page number of the pdf page...
@@ -95,6 +96,8 @@ export class TicketComponent implements OnInit {
   mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
 
   constructor(public app: AppService, private route: ActivatedRoute, private router: Router) {
+    this.allowToSTMP = true;
+
 
     this.attributes = {
       id_ticket: 0,
@@ -220,7 +223,12 @@ export class TicketComponent implements OnInit {
    // Once the component is ready to be used do something with it...
   ngOnInit() {
 
+    // Check if user is Sign in to APP
     this.app.handleLogIn();
+    console.log(this.app.account_info);
+    // Find out what work center user belongs..
+    this.allowToSTMP = this.app.account_info?.getAddressby();
+
 
     const _self = this;
 
@@ -1420,21 +1428,6 @@ export class TicketComponent implements OnInit {
     // End of Class..
 }
 
-// Create Interface For Comments
-interface FEED {
-   id_com: string;
-   user_id: string;
-   first_name: string;
-   last_name: string;
-   time: string;
-   ticket_comments: string;
-   ticket_number: string;
-   ticket_section: string;
-   allow?: boolean;
-   edit?: boolean;
-   time_track: any;
-}
-
 
 // Create InterFace For Tickets
 interface Ticket{
@@ -1495,7 +1488,7 @@ interface Ticket{
   system_assign?: any;
   sentto?: any;
   status?: string;
-  started_ticket?: string;
+  started_ticket?: any;
   point?: string;
 
 }

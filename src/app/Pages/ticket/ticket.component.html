@@ -363,7 +363,7 @@
                 <input class="point"
                  [value]="meFullName"
                  type="text" (click)="stamp()"
-                 placeholder="CLICK HERE TO STAMP"  readonly />
+                 placeholder="CLICK HERE TO STAMP" [disabled]="allowToSTMP"  readonly />
 
                 <button (click)="stamp()" class="button">
                     STAMP ME
@@ -378,7 +378,7 @@
             <div class="input-control text full-size">
                <label>Date Addressed</label>
                 <input id="date_addres" data-tab="lv" data-checked="0"
-                 [disabled]="lvSection" type="date"
+                 [disabled]="lvSection || allowToSTMP" type="date"
                  [(ngModel)]="attributes.date_addressed"  logs>
             </div>
 

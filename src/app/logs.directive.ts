@@ -48,7 +48,7 @@ export class LogsDirective {
     }else {
       return ele.value;
     }
-    
+
   }
 
   generateTimeStamp():Array<any> {
@@ -70,7 +70,7 @@ export class LogsDirective {
     var check = inputEle.dataset['checked'] || false;
     var inValue =  this.handleCheckBox(inputEle);
     var tab = inputEle.dataset['tab'] || 'none';
-   
+
     inputEle.dataset['checked'] = 0;
     if(attr && check == 1 && inValue){
 
@@ -89,7 +89,7 @@ export class LogsDirective {
        let stamp = this.generateTimeStamp();
        form.append("id_ticket", this.inputId.value);
        form.append("objectid", this.inputObj.value);
-       form.append("userId", this.app.account_info.user_id);
+       form.append("userId", `${this.app.account_info.user_id}`);
        form.append("type", inputEle.type)
        form.append('tab', tab);
        form.append('attr', attr);
@@ -98,7 +98,7 @@ export class LogsDirective {
         `${this.app.account_info.first_name} ${this.app.account_info.last_name}`);
        form.append("tmJS",`${stamp[0]}`);
        form.append("tmTXT", `${stamp[1]}:${stamp[2]}:${stamp[3]}`)
-       
+
 
        if(previous)
        {
@@ -119,17 +119,17 @@ export class LogsDirective {
 
           });
        }else{
-       
+
           form.append('value', inValue);
           fetch(this.app.url + this.url_log, {method: 'post',body: form}).then((respopnse) =>{
             console.log("log something out");
             refresh.dispatchEvent(event);
           });
        }
-      
 
-       
-       
+
+
+
 
     }
   }

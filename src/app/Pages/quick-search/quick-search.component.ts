@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AppService} from "../../app.service";
+import {AppService, FEED} from '../../app.service';
 @Component({
   selector: 'app-quick-search',
   templateUrl: './quick-search.component.html',
@@ -17,7 +17,7 @@ export class QuickSearchComponent implements OnInit {
   constructor(private route: ActivatedRoute,private router: Router, private app: AppService) { }
 
   ngOnInit() {
-    if(parseInt(this.app.account_info.user_id) == 0)this.router.navigateByUrl("/");
+    if(this.app.account_info.user_id == 0)this.router.navigateByUrl("/");
 
    // console.log(this.app.users);
     this.isLoading = true;
@@ -131,17 +131,3 @@ export class QuickSearchComponent implements OnInit {
 
 }
 
-// Create Interface For Comments
-interface FEED {
-  id_com:          string,
-  user_id:         string,
-  first_name:      string,
-  last_name:       string,
-  time:            string,
-  ticket_comments: string,
-  ticket_number:   string,
-  ticket_section:  string,
-  allow?: boolean;
-  edit?: boolean;
-  time_track:      any
-}

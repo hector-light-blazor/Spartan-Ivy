@@ -92,9 +92,12 @@ export class AppService {
   wcadurl: string = "https://gis.lrgvdc911.org/arcgis/rest/services/Features/Parcels/MapServer/find?";
   hcadquery: string = "http://propaccess.hidalgoad.org:6080/arcgis/rest/services/HidalgoMapSearch/MapServer/1";
   // Get Account Info
-  account_info: LOGIN_INFO = {
-     deparment_id: "",
-     user_id: null
+  account_info: USER = {
+     department_id: "",
+     user_id: null,
+     getAddressby(): boolean {
+       return (this.work_center == 'LV' || this.workk_center == 'ADMIN')
+     }
   }
 
 
@@ -226,7 +229,7 @@ export class AppService {
   //Handle Check Login Status if not available.
   handleLogIn() {
     //****EXPLICIT IF NO ACCOUNT INFO REDIRECT */
-
+  
     if(!this.account_info.organization_id){
       console.log("EMPTY")
       console.log(this.router.url);
@@ -372,9 +375,14 @@ export interface USER{
   avatar?: string
   online?: number
   config_id?: number
-  department_id?: number
+  department_id?: string
   icon?: string
   work_center?: string
+  symbol?: string
+  role_id?: number
+  organization_id?: number
+  config?: any
+  getAddressby(): boolean
 }
 
 interface PICK {
@@ -477,19 +485,7 @@ interface API_ROUTES {
    gToken?: string;
 }
 
-interface LOGIN_INFO {
-  deparment_id?: string;
-  first_name?: string;
-  initials?: string;
-  last_name?: string;
-  online?: string;
-  organization_id?: string;
-  password?: "";
-  role_id?: string;
-  symbol?: string;
-  user_id?: string;
-  config?: any;
-}
+
 
 interface MSG_CODES {
    alert?: string;
@@ -508,4 +504,20 @@ interface TOOLBAR_BUTTONS{
   TICKET_TABLE?: boolean,
   QUICK_SEARCH?: boolean,
   SETTINGS_PHOTO?: boolean
+}
+
+
+// Create Interface For Comments
+export interface FEED {
+  id_com: number;
+  user_id: number;
+  first_name: string;
+  last_name: string;
+  time: string;
+  ticket_comments: string;
+  ticket_number: string;
+  ticket_section: string;
+  allow?: boolean;
+  edit?: boolean;
+  time_track: any;
 }

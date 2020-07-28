@@ -22,7 +22,7 @@ export class DashboardTicketsComponent implements OnInit {
   searchAll:string = '';
   searchInbox: string = '';
   searchMine: string = '';
-  organizationFilter: string = ''; //Controls the organization filter for the open tickets..
+  organizationFilter: number; //Controls the organization filter for the open tickets..
   organizationID: number = 0;
   timer = timer(0, 6000);
   isAlive:boolean = true;
@@ -44,7 +44,7 @@ export class DashboardTicketsComponent implements OnInit {
     // 2.) Gather All Open Tickets...
     this.allLoading = true;
     this.openTickets = [];
-    this.organizationID = parseInt(this.app.account_info.organization_id);
+    this.organizationID = this.app.account_info.organization_id;
     this.inbox = [];
     this.app.POST_METHOD(this.app.route.api.ftInbox, {data: this.app.account_info.user_id}).subscribe((response:any) => {
         if(response.success) {

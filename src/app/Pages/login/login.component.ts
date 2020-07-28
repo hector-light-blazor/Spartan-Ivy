@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {AppService} from "../../app.service";
-import {Router} from "@angular/router";
+
 
 
 @Component({
@@ -21,16 +21,16 @@ export class LoginComponent implements OnInit {
 
 
   cookie: Array<string> = [];
-  constructor(private _appService: AppService, private router: Router) {
+  constructor(private _appService: AppService) {
 
      //<<Lets Load the ESRI OBJECTS SO THE WHOLE DOCUMENT CAN USE THE OBJECTS>>>
      this._appService.esriLoadObjects();
 
-    console.log("I RAN")
-    this._appService.GET_METHOD(this._appService.route.api.fEmails).subscribe((response: Array<string>) => {
-        console.log(response);
-        this.users = response;
-    });
+     // EX: This GET METHOD IS FOR THE MOBILE TABLETS.
+    // this._appService.GET_METHOD(this._appService.route.api.fEmails).subscribe((response: Array<string>) => {
+    //     console.log(response);
+    //     this.users = response;
+    // });
 
     if(document.cookie) {
        // Lets Process the cookie
