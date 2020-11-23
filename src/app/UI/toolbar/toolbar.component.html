@@ -33,7 +33,7 @@
                       <div *ngIf="_toolSettings.SECTIONS.TICKET.onoff" class="tab-panel" id="tab_tickets" style="display: block;">
                           <div *ngIf="_toolSettings.SECTIONS.TICKET.DISPLAY.onoff" class="tab-panel-group">
                               <div class="tab-group-content">
-                                  <a *ngIf="_toolSettings.SECTIONS.TICKET.DISPLAY.ids.dash"  [routerLink]="['ticket/dashboard']" class="fluent-big-button">
+                                  <a *ngIf="_toolSettings.SECTIONS.TICKET.DISPLAY.ids.dash" [routerLink]="['ticket/dashboard']" class="fluent-big-button">
                                       <!--<span class="icon"><i class="fa fa-tachometer" aria-hidden="true"></i></span>-->
                                       <img src="../../../assets/dashboard.png" alt="Dashboard Toolbar">
                                       Dashboard
@@ -101,15 +101,15 @@
                           </div>
                           <div *ngIf="ticketAvailable" class="tab-panel-group"  >
                               <div class="tab-group-content">
-                                <div class="tab-content-segment">
-                                    <button (click)="actionSendToolBar(app.toolbarActivies.TICKET_SAVE_TRANSFER)" class="fluent-big-button">
+                                <div  class="tab-content-segment">
+                                    <button  (click)="actionSendToolBar(app.toolbarActivies.TICKET_SAVE_TRANSFER)" class="fluent-big-button">
                                         <img src="../../../assets/save.png" alt="Save and Transfer Ticket">
                                         <!--<span class="mif-floppy-disk"></span>-->
                                         Save &
                                           <br>
                                         Transfer
                                     </button>
-                                    <button (click)="actionSendToolBar(app.toolbarActivies.TICKET_DELETE)" class="fluent-big-button">
+                                    <button  (click)="actionSendToolBar(app.toolbarActivies.TICKET_DELETE)" class="fluent-big-button">
                                       <!--<span class="mif-bin"></span>-->
                                       <img src="../../../assets/garbage.png" alt="Delete Ticket">
                                       Delete
@@ -121,7 +121,7 @@
                                       <img src="../../../assets/cabinet.png" alt="Archive Ticket" />
                                       {{lblArchive}}
                                     </button>
-                                    <button *ngIf="lblArchive === 'UN-ARCHIVE'" (click)="actionSendToolBar(app.toolbarActivies.TICKET_UNARCHIVE)" class="fluent-big-button">
+                                    <button  *ngIf="lblArchive === 'UN-ARCHIVE'" (click)="actionSendToolBar(app.toolbarActivies.TICKET_UNARCHIVE)" class="fluent-big-button">
                                       <img src="../../../assets/cabinet.png" alt="Archive Ticket" />
                                       {{lblArchive}}
                                     </button>
@@ -227,7 +227,7 @@
                               <div class="tab-group-content">
                                 <a *ngIf="_toolSettings.SECTIONS.TICKET.DISPLAY.ids.dash"  [routerLink]="['ticket/dashboard']" class="fluent-big-button">
                                     <!--<span class="icon"><i class="fa fa-tachometer" aria-hidden="true"></i></span>-->
-                                    <img src="../../../assets/dashboard.png" alt="Dashboard Toolbar">
+                                    <img   src="../../../assets/dashboard.png" alt="Dashboard Toolbar">
                                     Dashboard
                                 </a>
 

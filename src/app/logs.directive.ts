@@ -60,7 +60,7 @@ export class LogsDirective {
   }
 
   onBlurChange(e){
-    console.log(this.app.logs)
+   
     var refresh = document.getElementById("contLog") || null;
     var event = new Event("logged");
     var previous = false;
@@ -68,10 +68,24 @@ export class LogsDirective {
     var inputEle = e.target || e.srcElement;
     var attr = inputEle.id || false;
     var check = inputEle.dataset['checked'] || false;
+    var inbox = inputEle.dataset['inbox'] || false;
     var inValue =  this.handleCheckBox(inputEle);
     var tab = inputEle.dataset['tab'] || 'none';
 
     inputEle.dataset['checked'] = 0;
+    if(inbox){
+      var _self = this;
+      var att = inputEle.dataset['attribute'];
+     
+      this.app.inbox.forEach(obj => {
+        if(obj['objectid'] == _self.inputObj.value) {
+          obj[att] = inputEle.value;
+          return; //Kill Loop..
+        }
+      });
+     
+    }
+
     if(attr && check == 1 && inValue){
 
        if(this.app.logs.length > 0){

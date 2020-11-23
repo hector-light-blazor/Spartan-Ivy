@@ -15,7 +15,7 @@
     </div>
 </div> <!-- Confirmation Window -->
 
-<app-letter-viewer *ngIf="showSignature" (close)="showSignature = false" [id_ticket]="attributes.id_ticket" [pdfFile]="pdfFile"></app-letter-viewer>
+<ui-letter-viewer *ngIf="showSignature" (close)="showSignature = false" [id_ticket]="attributes.id_ticket" [pdfFile]="pdfFile"></ui-letter-viewer>
 <!-- <app-signature-pad *ngIf="showSignature" (close)="showSignature = false" [pdfFile]="pdfFile"></app-signature-pad> -->
 <app-dialog *ngIf="displayDialog" [ESIGN]="esign" (esignPDF)="pdfFile = $event; showSignature = true; displayDialog = false;" (send)="generateLetter($event)" (close)="displayDialog = false;" [attributes]="attributes"></app-dialog>
 <app-ticket-workflow *ngIf="displayWorkflow" [ticketid]="attributes.id_ticket" (onClose)="updateRoute($event);displayWorkflow = false;" [sentto]="attributes.sentto" [routing]="attributes.system_assign" [staffId]="attributes.started_ticket"></app-ticket-workflow>
@@ -84,7 +84,10 @@
             <div class="input-control text full-size" data-role="input">
                <label  >First Name</label>
                <input id="cfirst_name" data-tab="customerData"
-                [disabled]="customerSection" type="text"
+                [disabled]="customerSection" 
+                data-inbox="1"
+                data-attribute="cfirst_name"
+                type="text"
                 data-checked="0"
                [(ngModel)]="attributes.cfirst_name" logs uppercase>
             </div>
@@ -95,9 +98,23 @@
                 <input
                 id="clast_name" data-tab="customerData"
                 data-checked="0"
+                data-inbox="1"
+                data-attribute="clast_name"
                 [disabled]="customerSection"
                 type="text"
                 [(ngModel)]="attributes.clast_name"
+                logs   uppercase>
+            </div>
+            <br>
+            <br>
+            <div class="input-control text full-size" data-role="input">
+              <label  >Specify Address Letter Name</label>
+              <input
+                id="letter_name" data-tab="customerData"
+                data-checked="0"
+                [disabled]="customerSection"
+                type="text"
+                [(ngModel)]="attributes.letter_name"
                 logs   uppercase>
             </div>
             <br>
@@ -140,6 +157,28 @@
             </div>
             <br>
             <br>
+          <div class="input-control text full-size">
+            <label  >E-Mail</label>
+            <input id="cemail"
+                   [disabled]="customerSection" type="text"
+                   [(ngModel)]="attributes.cemail"
+                   data-checked="0"
+                   data-tab="customerData"
+                   logs>
+          </div>
+          <br>
+          <br>
+          <div class="input-control text full-size">
+            <label  >ALT E-Mail</label>
+            <input id="alt_cemail"
+                   [disabled]="customerSection" type="text"
+                   [(ngModel)]="attributes.alt_cemail"
+                   data-checked="0"
+                   data-tab="customerData"
+                   logs>
+          </div>
+          <br>
+          <br>
             <div class="input-control text full-size">
                 <label  >Prefered Language</label>
                 <select id="prf_language"

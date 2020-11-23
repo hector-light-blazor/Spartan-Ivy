@@ -112,9 +112,8 @@ export class ToolbarComponent implements OnInit {
 
   ngOnInit() {
 
-
     this.app.ticketInteractionToolbar.pipe(takeWhile(() => this.isAlive)).subscribe(action => {
-      console.log(`Testing Interaction ${action}`);
+
       if (action.toolbar) {
         this.ticketAvailable = action.data;
       }else if (action.archive){
@@ -191,18 +190,15 @@ export class ToolbarComponent implements OnInit {
     // UPDATE WHEN PRESSING ARCHIVE NEED TO MAKE ADJUSTMENTS FOR UN-ARCHIVE
       switch (action) {
         case this.app.toolbarActivies.TICKET_SAVE_TRANSFER:
-
           this.app.toolbarActions.next({action, data: null});
           break;
         case this.app.toolbarActivies.TICKET_UNARCHIVE:
           this.app.toolbarActions.next({action, data: null});
           break;
         case this.app.toolbarActivies.TICKET_ARCHIVE:
-
           this.app.toolbarActions.next({action, data: null});
           break;
         case this.app.toolbarActivies.TICKET_DELETE:
-
           this.app.toolbarActions.next({action, data: null});
           break;
         case this.app.toolbarActivies.TICKET_INSERT_COMMENT:

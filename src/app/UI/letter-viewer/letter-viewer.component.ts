@@ -5,7 +5,7 @@ import { AppService } from '../../app.service';
 declare var pdfjsLib:any;
 declare var jQuery:any;
 @Component({
-  selector: 'app-letter-viewer',
+  selector: 'ui-letter-viewer',
   templateUrl: './letter-viewer.component.html',
   styleUrls: ['./letter-viewer.component.css']
 })

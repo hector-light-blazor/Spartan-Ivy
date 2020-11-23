@@ -19,7 +19,6 @@ export class AppComponent {
   msg: string = "Please wait... Setting up Spartan Pro";
 
   timer:any = timer(0, 6000);
-  account_info: any;
   ticketFirst: boolean = true;
   ticketCount: number = 0;
   spartansOnline: any = {};
@@ -46,9 +45,12 @@ export class AppComponent {
 
 
           this.isLoading = true;
-          this.account_info = info.user;
 
-          this.appService.account_info = this.account_info;
+          // Loop to update only certain keys.
+          for(var x in info.user){
+              this.appService.account_info[x] = info.user[x];
+          }
+
 
           //NOTIFY THE SOCKET WE ARE ONLINE....
           //this.socket.emit("new user", this.appService.account_info.)
@@ -61,11 +63,15 @@ export class AppComponent {
             this.appService.POST_METHOD(this.appService.route.api.ftInbox,
                {data: this.appService.account_info.user_id})
                .subscribe((response: any) =>{
-                 console.log("fetch");
+                
                 if(response.success) {
+                  this.appService.inbox = this.appService.cleanInbox(response.data);
+                 
+
                   if(this.ticketFirst) {
                     this.ticketCount = response.data.length;
                     this.ticketFirst = false;
+                   
                   }else {
                     let count = response.data.length;
                     if(count > this.ticketCount) {

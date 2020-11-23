@@ -91,13 +91,18 @@ export class AppService {
   hcadurl2: string = this.url + 'proxy/geometryHCADParcels/?';
   wcadurl: string = "https://gis.lrgvdc911.org/arcgis/rest/services/Features/Parcels/MapServer/find?";
   hcadquery: string = "http://propaccess.hidalgoad.org:6080/arcgis/rest/services/HidalgoMapSearch/MapServer/1";
+  inbox: Array<any> = []; 
+
   // Get Account Info
   account_info: USER = {
      department_id: "",
      user_id: null,
-     getAddressby(): boolean {
-       return (this.work_center == 'LV' || this.workk_center == 'ADMIN')
-     }
+     work_center: "",
+    getAddressby(): boolean {
+       console.log(this.work_center);
+      return (this.work_center == 'LV' || this.workk_center == 'ADMIN')
+    }
+
   }
 
 
@@ -226,10 +231,22 @@ export class AppService {
     return this.http.post(this.url + request, body);
   }
 
+  //Clean up the inbox...
+  cleanInbox(data:Array<any>): Array<any>{
+
+    data.forEach(element => {
+                element.total = (element.total == "0") ? false : true;
+                element.letter_generated = (element.letter_generated == "1") ? true : false;
+                element.icon = (element.icon) ? this.url + this.route.api.uImage + element.icon : "assets/avatar.png";
+            });
+     return data;
+  }
+
+
   //Handle Check Login Status if not available.
   handleLogIn() {
     //****EXPLICIT IF NO ACCOUNT INFO REDIRECT */
-  
+
     if(!this.account_info.organization_id){
       console.log("EMPTY")
       console.log(this.router.url);

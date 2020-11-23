@@ -38,6 +38,7 @@ export class DashboardTicketsComponent implements OnInit {
 
   ngOnInit() {
    this.app.handleLogIn();
+  
 
     // Begin with Fetching some data from db server..
     // 1.) First Get Worker Ticket Inbox...
@@ -46,18 +47,20 @@ export class DashboardTicketsComponent implements OnInit {
     this.openTickets = [];
     this.organizationID = this.app.account_info.organization_id;
     this.inbox = [];
-    this.app.POST_METHOD(this.app.route.api.ftInbox, {data: this.app.account_info.user_id}).subscribe((response:any) => {
-        if(response.success) {
-          response.data.forEach(element => {
-              element.total = (element.total == "0") ? false : true;
-              element.letter_generated = (element.letter_generated == "1") ? true : false;
-              element.icon = (element.icon) ? this.app.url + this.app.route.api.uImage + element.icon : "assets/avatar.png";
-          });
-          this.inbox = (response.success) ? response.data : [];
-        }
+    // this.app.POST_METHOD(this.app.route.api.ftInbox, {data: this.app.account_info.user_id}).subscribe((response:any) => {
+        
+    //     if(response.success) {
+          
+    //       response.data.forEach(element => {
+    //           element.total = (element.total == "0") ? false : true;
+    //           element.letter_generated = (element.letter_generated == "1") ? true : false;
+    //           element.icon = (element.icon) ? this.app.url + this.app.route.api.uImage + element.icon : "assets/avatar.png";
+    //       });
+    //       this.inbox = (response.success) ? response.data : [];
+    //     }
 
 
-    });
+    // });
 
     // GET ALL OPEN TICKETS BY ORGINZATION...
     if(this.app.account_info.organization_id) {

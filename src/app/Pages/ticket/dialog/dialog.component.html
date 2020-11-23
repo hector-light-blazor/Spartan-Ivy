@@ -6,12 +6,12 @@
         <span class="btn-close" (click)="closeDialog()"></span>
     </div>
     <div class="window-content" style="height: 200px">
-      <label >Type the name of the customer?</label>
+      <label >Type name if not available</label>
       <br>
         <div class="input-control text full-size">
             <input [(ngModel)]="choosen" type="text">
         </div>
-        <label >Suggestions</label>
+        <label >Drop Down Suggestion</label>
         <br>
         <div class="input-control select full-size">
             <select  [(ngModel)]="choosen">
@@ -19,7 +19,30 @@
             </select>
         </div>
         <br>
-        <button [ngClass]="{'loading-cube': loading}"  class="button rounded" (click)="sendLetterRequest()">Submit</button>
+        <div style="display: flex;justify-content: space-around;">
+            <div>
+                <button 
+                [ngClass]="{'loading-cube': loading}"  
+                class="button rounded" 
+                (click)="sendLetterRequest()">Generate</button>
+            </div>
+
+            
+            <div *ngIf="pdfFile.includes('.pdf')">
+                <button [ngClass]="{'loading-cube': loading}" 
+                 class="button rounded" 
+                 (click)="sendLetterRequest()">
+                 Notify User</button>
+            </div>
+            <div *ngIf="pdfFile.includes('.pdf')">
+                <button [ngClass]="{'loading-cube': loading}" 
+                 class="button rounded" 
+                 (click)="sendLetterRequest()">
+                 Attach Online</button>
+            </div>
+            
+        </div>
+      
     </div>
 </div>
 <!-- this div to handle the e sign with tablet -->

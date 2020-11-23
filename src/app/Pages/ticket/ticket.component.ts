@@ -225,10 +225,14 @@ export class TicketComponent implements OnInit {
 
     // Check if user is Sign in to APP
     this.app.handleLogIn();
-    console.log(this.app.account_info);
-    // Find out what work center user belongs..
-    this.allowToSTMP = this.app.account_info?.getAddressby();
 
+    // Find out what work center user belongs..
+    this.allowToSTMP = !this.app.account_info.getAddressby();
+
+
+    // Following logic is to identify if they filled out certain fields
+    // Advice user needs to fill out the stamps
+    this.checkFieldsValidation();
 
     const _self = this;
 
@@ -267,6 +271,16 @@ export class TicketComponent implements OnInit {
     // .. No routing necessary...
     this.masterSave(this.prepareTicket());
  }
+
+   checkFieldsValidation(){
+      let lv = false;
+      if(this.attributes.add_num
+        && this.attributes.rd){
+        lv = true;
+      }
+
+      console.log(`THERE IS VALUES ON LV SECTION ${lv}`)
+   }
 
   // Generate New Ticket Number
   generateTicketNumber() {
@@ -569,13 +583,13 @@ export class TicketComponent implements OnInit {
                   this.attributes.system_assign = {a: [lv, db, gis, started], index: 0};
                   this.attributes.sentto = this._routeFigureAdvance(); // make decision who to pass...
                   // Finally we can save the information to the db server..
-                  this.masterSave(this.prepareTicket());
+                  this.masterSave(this.prepareTicket(), 'ticket/dashboard');
 
-                  setTimeout(() => { // Navigate to dashboard once everything is said and done..
-                    // Change route to default view for this user...
-                   _self.router.navigateByUrl('ticket/dashboard');
+                //   setTimeout(() => { // Navigate to dashboard once everything is said and done..
+                //     // Change route to default view for this user...
+                //    _self.router.navigateByUrl('ticket/dashboard');
 
-                 }, 300);
+                //  }, 400);
                 }
             });
           }
@@ -1008,7 +1022,7 @@ export class TicketComponent implements OnInit {
     }
 
     // =-=-=--= MODULE SAVES THE ENTIRE TICKET TO DB SERVER =-=-=-=-=-=-=-=
-    masterSave(attr){
+    masterSave(attr, link=''){
 
       this.app.POST_METHOD(this.app.route.api.sTicket, {data: attr}).subscribe((response: any) => {
         // console.log(response);
@@ -1019,6 +1033,8 @@ export class TicketComponent implements OnInit {
                 content: 'Failed to save',
                 type: this.app.msg_codes.alert
             });
+        }else{
+           if(link) this.router.navigateByUrl(link);
         }
 
       });
@@ -1403,7 +1419,7 @@ export class TicketComponent implements OnInit {
 
       let walkIn: string = (this.attributes.walk_in === 'Yes') ? 'WALK IN - ' : 'NONE';
       let util: string = (this.attributes.utility === 'Yes') ? 'UTILITY - ' : 'NONE';
-      let archive: string = (this.attributes.status === 'ARCHIVE' || this.attributes.sentto == '00') ? 'TICKET ARCHIVED' : 'NONE';
+      let archive: string = (this.attributes.sentto == '00') ? 'TICKET ARCHIVED' : 'NONE';
       let total: string = `${walkIn}${util}${archive}`;
 
       total = total.replace('NONE', '').replace('NONE', '').replace('NONE', '');
@@ -1430,12 +1446,14 @@ export class TicketComponent implements OnInit {
 
 
 // Create InterFace For Tickets
-interface Ticket{
+export interface Ticket{
   id_ticket?: number;
   objectid?: number;
   cfull_name?: string;
   cfirst_name?: string;
   clast_name?: string;
+  cemail?: string;
+  alt_cemail?: string;
   telephone_land_line?: string;
   alt_telephone?: string;
   alt2_telephone?: string;
@@ -1490,5 +1508,6 @@ interface Ticket{
   status?: string;
   started_ticket?: any;
   point?: string;
+  letter_name?: string
 
 }
