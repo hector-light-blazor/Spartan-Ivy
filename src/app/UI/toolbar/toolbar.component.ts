@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {toolBarSettings} from './toolbarSettings';
 import {AppService} from '../../app.service';
 import { takeWhile } from 'rxjs/operators';
+import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -13,7 +14,10 @@ import { takeWhile } from 'rxjs/operators';
 
 
 export class ToolbarComponent implements OnInit {
-
+  faAngleDown = faAngleDown; //ICONS...
+  drop: boolean = false;
+ agency_logo: string = "../../../assets/spartan_logo.webp"
+ name: string = "HECTOR CHAPA";
   // =-=-=- GLOBAL VARIABLES -=-=-filterAvailable=-=-=-=-=
   _toolSettings: toolBarSettings;
 
@@ -272,6 +276,7 @@ export class ToolbarComponent implements OnInit {
  }
 
  onLogOut() {
+
    // TODO: REMOVE COOKIES...
    this.delete_cookie('username');
    this.delete_cookie('pass');

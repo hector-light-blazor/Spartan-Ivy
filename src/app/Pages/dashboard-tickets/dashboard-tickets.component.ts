@@ -15,7 +15,8 @@ export class DashboardTicketsComponent implements OnInit {
 
 
   // Global variable
-
+  online: any = ["https://d2rd7etdn93tqb.cloudfront.net/wp-content/uploads/2019/04/Billie-Ellish-Instagram-social-041519.jpg", "https://d2rd7etdn93tqb.cloudfront.net/wp-content/uploads/2019/04/Billie-Ellish-Instagram-social-041519.jpg", 
+  "https://d2rd7etdn93tqb.cloudfront.net/wp-content/uploads/2019/04/Billie-Ellish-Instagram-social-041519.jpg", "https://d2rd7etdn93tqb.cloudfront.net/wp-content/uploads/2019/04/Billie-Ellish-Instagram-social-041519.jpg"]
   inbox:any =  [];
   openTickets:any   =  [];
   allLoading: boolean = false;

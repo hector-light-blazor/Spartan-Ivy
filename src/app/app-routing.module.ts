@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { DashboardTicketsComponent } from './Pages/dashboard-tickets/dashboard-tickets.component';
 import { LoginComponent } from './Pages/login/login.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: LoginComponent
+    component: DashboardTicketsComponent
   },
   {
     path: 'ticket/charts',
     loadChildren: () => import('./Pages/ticket-charts/ticket-charts.module').then(m => m.TicketChartsModule)
-    ///  #TicketChartsModule'
   },
   {
     path: 'ticket/dashboard',
@@ -67,7 +67,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

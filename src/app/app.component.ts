@@ -29,8 +29,9 @@ export class AppComponent {
   constructor(private router: Router, private appService: AppService, private notify: NativeNotificationService) {
     let _self = this;
 
-
+        // Communication from any component to the main APP
         this.appService.cntAppFromLogin.pipe(takeWhile(() => this.isAlive)).subscribe(info => {
+
 
           if(!info.hasOwnProperty('user')) {
             //THIS IS TO DISPLAY THE LETTER VIEWER..

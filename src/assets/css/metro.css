@@ -61,7 +61,7 @@ sub {
   bottom: -0.25em;
 }
 img {
-  height: auto;
+  /* height: auto; */
   vertical-align: middle;
   border: 0;
 }
@@ -469,10 +469,10 @@ dl.horizontal dd {
   margin-left: 11.25rem;
 }
 a {
-  color: #2086bf;
+  color: #A78E24;
 }
 a:visited {
-  color: #2086bf;
+  color: #A78E24;
 }
 hr {
   border: 0;
@@ -2337,12 +2337,12 @@ a.tag {
   height: 3.125rem;
   background-color: inherit;
 }
-.app-bar .app-bar-menu > li:hover,
+/* .app-bar .app-bar-menu > li:hover,
 .app-bar .app-bar-menu > li > a:hover,
 .app-bar .app-bar-menu > li:active,
 .app-bar .app-bar-menu > li > a:active {
   background-color: #005696;
-}
+} */
 .app-bar .app-bar-menu > li.branding,
 .app-bar .app-bar-menu > li > a.branding {
   padding-left: 1rem;
@@ -14057,15 +14057,12 @@ p [data-hint] {
 .fluent-menu .tabs-holder li:first-child {
   margin-left: 0;
 }
-.fluent-menu .tabs-holder li.active {
-  border: 1px #303030 solid;
-  
-}
+
 /*border-bottom-color: #ffffff;*/
 /*border: 1px #d4d4d4 solid;*/
 .fluent-menu .tabs-holder li.active a {
-  color: #0072c6;
-  background:#303030;
+  color: #b99805;
+  background:#05173F;
 }
 .fluent-menu .tabs-holder li.special {
   border: 1px #0072c6 solid;
@@ -14083,7 +14080,7 @@ p [data-hint] {
   margin-top: -1px;
   border: 1px #303030 solid;
   background-color: #ffffff;
-  height: 132px;
+  height: 160px;
 }
 .fluent-menu .tabs-content .tab-panel {
   display: block;
@@ -14096,7 +14093,7 @@ p [data-hint] {
   display: block;
   float: left;
   padding: 0 5px;
-  border-right: 1px #4673a3 solid;
+  border-right: 2px #0E2458 solid;
 }
 .fluent-menu .tabs-content .tab-panel .tab-panel-group:last-child {
   margin-right: 0;
@@ -14111,8 +14108,8 @@ p [data-hint] {
   right: 0;
   left: 0;
   white-space: nowrap;
-  background: black;
-  /*background: #eeeeee;*/
+  /* background: black; */
+  background: #000611;
 }
 .fluent-menu .tabs-content .tab-panel .tab-content-segment {
   display: block;
@@ -14132,12 +14129,11 @@ p [data-hint] {
   font-size: .8em;
   line-height: 1.2;
   vertical-align: middle;
-  color: #0ce3ac;
 }
 .fluent-menu .fluent-button:hover,
 .fluent-menu .fluent-big-button:hover,
 .fluent-menu .fluent-tool-button:hover {
-  background-color: black;
+  background-color: rgb(182, 39, 39);
   cursor: pointer;
 }
 .fluent-menu .fluent-button img,
@@ -14156,7 +14152,6 @@ p [data-hint] {
   width: 22px;
   height: 22px;
   color: white;
-  /*color: #444444;*/
   vertical-align: middle;
 }
 .fluent-menu .fluent-button .label,
@@ -14164,7 +14159,6 @@ p [data-hint] {
 .fluent-menu .fluent-tool-button .label {
   display: inline-block;
   color: #0ce3ac;
-  /*color: inherit;*/
   font: inherit;
 }
 .fluent-menu .fluent-button:active,
@@ -14192,8 +14186,8 @@ p [data-hint] {
 .fluent-menu .fluent-big-button .icon,
 .fluent-menu .fluent-big-button [class*=mif-] {
   display: block;
-  width: 50px;
-  height: 50px;
+  width: 80px;
+  height: 80px;
   font-size: 40px;
   float: none;
   text-align: center;

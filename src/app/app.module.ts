@@ -14,21 +14,27 @@ import {NativeNotificationService} from "angular-notice";
 
 import { TestComponent } from './test/test.component';
 
+import { ClickStopPropagationDirective } from './Directives/click-stop-propagation.directive';
+import { DashLoaderDirective } from './Directives/dash-loader.directive';
+
 @NgModule({
   declarations: [
     AppComponent,
     ToolbarComponent,
     LoginComponent,
     EmailComponent,
-    TestComponent
+    TestComponent,
+    ClickStopPropagationDirective,
+    DashLoaderDirective,
+    
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    SharedModule
-
+    SharedModule,
+    
   ],
   providers: [AppService, MapServiceService, NativeNotificationService],
   bootstrap: [AppComponent]

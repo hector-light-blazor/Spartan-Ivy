@@ -21,17 +21,20 @@ import { KeysPipe } from '../keys.pipe';
 import { LetterViewerComponent } from '../UI/letter-viewer/letter-viewer.component';
 import { InfomartionComponent } from '../UI/infomartion/infomartion.component';
 import {DisplayXYComponent} from '../Pages/main-map/components/display-xy/display-xy.component';
+import { CardComponent } from '../UI/dashboard/card/card.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SpartanCardComponent } from '../UI/online/spartan-card/spartan-card.component';
 
 @NgModule({
   imports: [
-
     CommonModule,
     FormsModule,
     TextMaskModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    FontAwesomeModule
   ],
   providers: [],
-  declarations: [MasterLoadingComponent,
+  declarations: [SpartanCardComponent,CardComponent,MasterLoadingComponent,
     KeysPipe,
     DisplayXYComponent,
     IdentifyListComponent,
@@ -47,7 +50,7 @@ import {DisplayXYComponent} from '../Pages/main-map/components/display-xy/displa
     GoogleMapComponent,
     FilterminePipe, DatatablePipe, UppercaseDirective, LogsDirective],
   exports:
-    [MasterLoadingComponent, FormsModule, DisplayXYComponent, TextMaskModule,
+     [SpartanCardComponent, FontAwesomeModule, CardComponent, MasterLoadingComponent, FormsModule, DisplayXYComponent, TextMaskModule,
       NgxDatatableModule, TicketWorkflowComponent, IdentifyListComponent,
       InfomartionComponent, FileUploaderComponent, EsriMapComponent,LeafletMapComponent, GoogleMapComponent,
     FileViewerComponent,QuickPickToolsComponent ,FullScreenPickComponent,LetterViewerComponent,KeysPipe, FilterminePipe, DatatablePipe, UppercaseDirective, LogsDirective]

@@ -1,0 +1,28 @@
+.card{
+    display: grid;
+    width: 100%;
+   
+}
+.row{
+    display: flex;
+    justify-content: space-between;
+
+}
+.title{
+    color: #726868;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+.icon{
+    width: 100px;
+    justify-content: end;
+    font-size: xxx-large;
+    text-align: center;
+}
+#s{
+    margin: 0 0 10px 40px;
+    color: #726868d7;
+    font-weight: bold;
+    font-size: 60px;
+}

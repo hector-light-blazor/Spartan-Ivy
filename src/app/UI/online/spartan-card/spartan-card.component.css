@@ -1,0 +1,14 @@
+#container{
+    padding: 4px;
+    text-align: center;
+    margin-bottom: 2px;
+}
+
+#container>img{
+    border-radius: 10px;
+}
+#container:hover{
+   
+    cursor: pointer;
+    box-shadow: 0 0 8px #00000048;
+}

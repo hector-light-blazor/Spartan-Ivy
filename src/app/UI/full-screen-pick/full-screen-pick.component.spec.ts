@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { FullScreenPickComponent } from './full-screen-pick.component';
 
@@ -6,7 +6,7 @@ describe('FullScreenPickComponent', () => {
   let component: FullScreenPickComponent;
   let fixture: ComponentFixture<FullScreenPickComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ FullScreenPickComponent ]
     })

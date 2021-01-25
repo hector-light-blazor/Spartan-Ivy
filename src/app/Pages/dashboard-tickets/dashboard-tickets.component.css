@@ -1,3 +1,119 @@
 .inboxR {
     color: red;
 }
+
+#dashCNT{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    width: 100vw;
+    height: auto;
+    overflow: hidden;
+    
+}
+#dashCNT > div:last-child{
+    margin-top: 20px;
+}
+
+
+#rowDash{
+    display: grid;
+
+    grid-template-rows: 50px auto;
+    border-radius: 10px;background-color: #FFFFFF;
+    width: 80%; height: 80%;
+}
+
+.column{
+    display: grid;
+    padding: 10px;
+    column-gap: 10px;
+    justify-content: center;
+    height: auto;
+    margin-left: 80px;
+    grid-template-columns: repeat(auto-fit, 500px);
+}
+
+.column>app-card{
+    background: white;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    width: 60%;
+    box-shadow: 0 0 6px #00000048;
+}
+
+
+.spartan-cont{
+    padding: 10px;
+}
+
+.main-title{
+    color: #646464;
+    margin-left: 30px;
+}
+
+.online-header{
+    position: sticky;
+    top:0;
+    color: rgb(27, 180, 68);
+    padding:4px;
+    background: white;
+    text-align: center;
+    box-shadow: 0 0 .5em rgba(0, 0, 0, .5);
+}
+
+#g{
+    display: grid;
+    column-gap: 20px;
+    grid-template-columns: auto auto;
+}
+
+#o{
+    background: white;
+    width: 320px;
+    height: 450px;
+    margin-left: auto;
+    overflow: hidden;
+}
+
+#o:hover{
+    overflow: auto;
+    animation: hide-scroll .2s backwards;
+}
+
+  /* width */
+  #o::-webkit-scrollbar{
+    width: 10px;
+  }
+  
+  /* Track */
+  #o::-webkit-scrollbar-track {
+   
+    width: 1px;
+    border-radius: 4px;
+    box-shadow: inset 0 0 10px 10px;
+    border: solid 3px transparent;
+  }
+   
+  /* Handle */
+  #o::-webkit-scrollbar-thumb {
+    
+    width:2px;
+    border-radius: 10px;
+    background: rgb(139, 10, 10); 
+  }
+
+
+.profile {
+    border-radius: 10px;
+}
+
+@keyframes hide-scroll {
+    from,
+    to {
+      overflow: hidden;
+    }
+  }

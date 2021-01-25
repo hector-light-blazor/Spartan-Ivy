@@ -1,25 +1,41 @@
-<div style="width:100%;height:30px; background:transparent;">
-        <div class="pull-right">
-                <div  style="position: absolute;right: 0; z-index: 2;" class="dropdown-button place-right baseStyle">
+<div class="title">
+    <ul class="list">
+       <li class="space">
+         <img [src]="agency_logo" width="70" height="50" alt="">
+       </li> 
+       <li class="space">
+           <h2>SPARTAN PRO V5</h2>
+       </li>
+       <li>
+        <div click-stop-propagation id="hero" (click)="drop = !drop; $event.preventDefault()">
+            <ul class="dropdown-menu" [ngClass]="{'fade-down': drop}">
+                <li class="dropdown-item" (click)="onLogOut()">
+                    Log Out <i class="fa fa-sign-out"></i>
+                </li>
+                <li class="dropdown-item" (click)="toogleToolbar()"> 
+                    Collapse Toolbar
+                </li>
+                <li class="dropdown-item" (click)="goFullScreen()">Full Screen</li>
+             </ul>
+               <span >{{name}}</span>
+               <fa-icon style="margin-top: 5px;" [icon]="faAngleDown"></fa-icon>
+               
+                <!-- <div  style="position: absolute;right: 0; z-index: 2;" class="dropdown-button place-right baseStyle">
                         <button class="button rounded dropdown-toggle">Options</button>
                         <ul class="split-content d-menu place-right" style="min-width: 0;" data-role="dropdown">
                             <li><a (click)="onLogOut()">Log Out <i class="fa fa-sign-out"></i></a></li>
                             <li><a (click)="toogleToolbar()">Collapse Toolbar</a></li>
                             <li><a (click)="goFullScreen()">Full Screen</a></li>
                         </ul>
-                </div>
+                </div> -->
         </div>
+       </li>
+    </ul>
   </div>
-
-  <!-- <app-charm-online></app-charm-online> -->
-  <div  class="desktopLogo">
-          <img src="../../../assets/public_safety_logo.png" width="70" height="50" alt="">
-  </div>
-
   <div  id="fluent-menu" class="fluent-menu" data-role="fluentmenu">
 
         <ul class="tabs-holder">
-                      <li class="special ribbed-emerald" (click)="toogleCharm()" style="cursor: pointer"><a>Online</a></li>
+                      <!-- <li class="special ribbed-emerald" (click)="toogleCharm()" style="cursor: pointer"><a>Online</a></li> -->
                       <li *ngIf="_toolSettings.SECTIONS.TICKET.onoff" class="active"><a href="#tab_tickets">Ticket</a></li>
                       <li *ngIf="_toolSettings.SECTIONS.SUBDIVISION.onoff" class=""><a href="#tab_subdivision">Subdivision</a></li>
                       <li *ngIf="_toolSettings.SECTIONS.NRF.onoff"><a href="#tab_nrfs">NRF's</a></li>
@@ -35,14 +51,14 @@
                               <div class="tab-group-content">
                                   <a *ngIf="_toolSettings.SECTIONS.TICKET.DISPLAY.ids.dash" [routerLink]="['ticket/dashboard']" class="fluent-big-button">
                                       <!--<span class="icon"><i class="fa fa-tachometer" aria-hidden="true"></i></span>-->
-                                      <img src="../../../assets/dashboard.png" alt="Dashboard Toolbar">
+                                      <img width="80" height="80" loading="lazy" src="../../../assets/v5/dashboard.webp" alt="Dashboard Toolbar">
                                       Dashboard
                                   </a>
 
                                   <div *ngIf="_toolSettings.SECTIONS.TICKET.DISPLAY.ids.calendar" class="tab-content-segment">
                                       <a [routerLink]="['ticket/calendar-view']" class="fluent-big-button">
                                           <!--<span class="mif-calendar"></span>-->
-                                          <img src="../../../assets/calendar.png" alt="Calendar Toolbar">
+                                          <img loading="lazy" src="../../../assets/v5/calendar.webp" alt="Calendar Toolbar">
                                           Calendar
                                       </a>
                                   </div>
@@ -68,7 +84,7 @@
                                   <div *ngIf="_toolSettings.SECTIONS.TICKET.INSERT.ids.nw" class="tab-content-segment">
                                       <a (click)="enableTicketTools()" [routerLink]="['ticket/new']" class="fluent-big-button">
                                         <!--<span class="icon"><i class="fa fa-id-card-o" aria-hidden="true"></i></span>-->
-                                        <img src="../../../assets/edit.png" alt="Edit Toolbar">
+                                        <img loading="lazy" src="../../../assets/edit.png" alt="Edit Toolbar">
                                           New
                                       </a>
                                   </div>
@@ -227,7 +243,7 @@
                               <div class="tab-group-content">
                                 <a *ngIf="_toolSettings.SECTIONS.TICKET.DISPLAY.ids.dash"  [routerLink]="['ticket/dashboard']" class="fluent-big-button">
                                     <!--<span class="icon"><i class="fa fa-tachometer" aria-hidden="true"></i></span>-->
-                                    <img   src="../../../assets/dashboard.png" alt="Dashboard Toolbar">
+                                    <img loading="lazy"  src="../../../assets/dashboard.png" alt="Dashboard Toolbar">
                                     Dashboard
                                 </a>
 

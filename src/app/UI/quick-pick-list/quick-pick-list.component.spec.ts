@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { QuickPickListComponent } from './quick-pick-list.component';
 
@@ -6,7 +6,7 @@ describe('QuickPickListComponent', () => {
   let component: QuickPickListComponent;
   let fixture: ComponentFixture<QuickPickListComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ QuickPickListComponent ]
     })
